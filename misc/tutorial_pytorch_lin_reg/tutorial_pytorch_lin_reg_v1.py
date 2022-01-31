@@ -11,6 +11,7 @@ np.random.shuffle(idx)
 
 # Uses first 80 random indices for train
 train_idx = idx[:80]
+
 # Uses the remaining indices for validation
 val_idx = idx[80:]
 
@@ -23,7 +24,7 @@ np.random.seed(42)
 a = np.random.randn(1)
 b = np.random.randn(1)
 
-print(a, b)
+print('Parameters (initial):', a, b)
 
 # Sets learning rate
 lr = 1e-1
@@ -47,10 +48,10 @@ for epoch in range(n_epochs):
     a = a - lr * a_grad
     b = b - lr * b_grad
 
-print(a, b)
+print('Parameters:', a, b)
 
 # Sanity Check: do we get the same results as our gradient descent?
 from sklearn.linear_model import LinearRegression
 linr = LinearRegression()
 linr.fit(x_train, y_train)
-print(linr.intercept_, linr.coef_[0])
+print('Parameters (sklearn):', linr.intercept_, linr.coef_[0])

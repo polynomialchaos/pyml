@@ -15,6 +15,7 @@ np.random.shuffle(idx)
 
 # Uses first 80 random indices for train
 train_idx = idx[:80]
+
 # Uses the remaining indices for validation
 val_idx = idx[80:]
 
@@ -39,6 +40,7 @@ n_epochs = 1000
 torch.manual_seed(42)
 a = torch.randn(1, requires_grad=True, dtype=torch.float, device=device)
 b = torch.randn(1, requires_grad=True, dtype=torch.float, device=device)
+print('Parameters (initial): ', a, b)
 
 # Defines a SGD optimizer to update the parameters
 loss_fn = nn.MSELoss(reduction='mean')
@@ -86,4 +88,4 @@ for epoch in range(n_epochs):
     # b.grad.zero_()
     optimizer.zero_grad()
 
-print(a, b)
+print('Parameters:', a, b)

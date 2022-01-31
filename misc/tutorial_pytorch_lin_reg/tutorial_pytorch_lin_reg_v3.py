@@ -7,17 +7,6 @@ from torch.utils.data import DataLoader
 from torch.utils.data import Dataset, TensorDataset
 from torch.utils.data.dataset import random_split
 
-class CustomDataset(Dataset):
-    def __init__(self, x_tensor, y_tensor):
-        self.x = x_tensor
-        self.y = y_tensor
-
-    def __getitem__(self, index):
-        return (self.x[index], self.y[index])
-
-    def __len__(self):
-        return len(self.x)
-
 class ManualLinearRegression(nn.Module):
     def __init__(self):
         super().__init__()
@@ -73,38 +62,15 @@ x_tensor = torch.from_numpy(x).float()
 y_tensor = torch.from_numpy(y).float()
 
 dataset = TensorDataset(x_tensor, y_tensor)
-
 train_dataset, val_dataset = random_split(dataset, [80, 20])
-
 train_loader = DataLoader(dataset=train_dataset, batch_size=16)
 val_loader = DataLoader(dataset=val_dataset, batch_size=20)
 
-# # Our data was in Numpy arrays, but we need to transform them into PyTorch's Tensors
-# # and then we send them to the chosen device
-# x_train_tensor = torch.from_numpy(x_train).float().to(device)
-# y_train_tensor = torch.from_numpy(y_train).float().to(device)
-
-# # Here we can see the difference - notice that .type() is more useful
-# # since it also tells us WHERE the tensor is (device)
-# print(type(x_train), type(x_train_tensor), x_train_tensor.type())
-
-# # Wait, is this a CPU tensor now? Why? Where is .to(device)?
-# x_train_tensor = torch.from_numpy(x_train).float()
-# y_train_tensor = torch.from_numpy(y_train).float()
-
-# train_data = CustomDataset(x_train_tensor, y_train_tensor)
-# print(train_data[0])
-
-# train_data = TensorDataset(x_train_tensor, y_train_tensor)
-# print(train_data[0])
-
-# train_loader = DataLoader(dataset=train_data, batch_size=16, shuffle=True)
-
-
 # Now we can create a model and send it at once to the device
 model = ManualLinearRegression().to(device)
+
 # We can also inspect its parameters using its state_dict
-print(model.state_dict())
+print('Parameters (initial):', model.state_dict())
 
 lr = 1e-1
 n_epochs = 1000
@@ -149,5 +115,5 @@ for epoch in range(n_epochs):
             val_loss = loss_fn(y_val, yhat)
             val_losses.append(val_loss.item())
 
-print(model.state_dict())
-print(val_losses)
+print('Parameters:', model.state_dict())
+# print(val_losses)

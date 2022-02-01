@@ -9,8 +9,7 @@ class ActivationLayer(Layer):
         super().__init__()
         self.activation = activation
 
-    def forward_propagation(self, input_data):
-        self.input = input_data
+    def forward_propagation(self):
         return self.activation.function(self.input)
 
     def backward_propagation(self, output_error, learning_rate):

@@ -23,7 +23,7 @@ net.train(x_train, y_train, epochs=10000, learning_rate=0.1)
 points = []
 for x in np.linspace(0, 1, 20):
     for y in np.linspace(0, 1, 20):
-        z = net.evaluate([[x], [y]])
+        z = net.forward([[x], [y]])
         points.append([x, y, z[0, 0]])
 
 points = np.array(points)

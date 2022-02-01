@@ -10,11 +10,19 @@ class Network:
         """Add a layer to the network."""
         self.layers.append(layer)
 
-    def evaluate(self, input_data):
-        """Evaluate the trained neural network."""
+    def backward(self, output_error, learning_rate):
+        """Backward propagation."""
+        output = output_error
+        for layer in reversed(self.layers):
+            output = layer.backward(output, learning_rate)
+
+        return output
+
+    def forward(self, input_data):
+        """Forward propagation."""
         output = input_data
         for layer in self.layers:
-            output = layer.forward_propagation(output)
+            output = layer.forward(output)
 
         return output
 
@@ -28,15 +36,14 @@ class Network:
             err = 0
             for x, y in zip(x_train, y_train):
                 # forward propagation
-                output = self.evaluate(x)
+                output = self.forward(x)
 
                 # compute loss (for display purpose only)
                 err += self.loss.function(y, output)
 
                 # backward propagation
                 error = self.loss.function_derive(y, output)
-                for layer in reversed(self.layers):
-                    error = layer.backward_propagation(error, learning_rate)
+                self.backward(error, learning_rate)
 
             # calculate average error on all samples
             err /= samples

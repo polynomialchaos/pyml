@@ -18,16 +18,6 @@ class ConvolutionalLayer(Layer):
         self.kernels = np.random.randn(*self.kernels_shape)
         self.biases = np.random.randn(*self.output_shape)
 
-    def forward_propagation(self, input_data):
-        self.input = input_data
-        self.output = np.copy(self.biases)
-        for i in range(self.depth):
-            for j in range(self.input_depth):
-                self.output[i] += correlate2d(self.input[j],
-                                              self.kernels[i, j], 'valid')
-
-        return self.output
-
     def backward_propagation(self, output_error, learning_rate):
         kernel_gradient = np.zeros(self.kernels_shape)
         input_gradient = np.zeros(self.input_shape)
@@ -39,6 +29,16 @@ class ConvolutionalLayer(Layer):
                 input_gradient[j] += convolve2d(output_error[i],
                                                 self.kernels[i, j], 'full')
 
+        # update parameters
         self.kernels -= learning_rate * kernel_gradient
         self.biases -= learning_rate * output_error
         return input_gradient
+
+    def forward_propagation(self):
+        output = np.copy(self.biases)
+        for i in range(self.depth):
+            for j in range(self.input_depth):
+                output[i] += correlate2d(self.input[j],
+                                         self.kernels[i, j], 'valid')
+
+        return output

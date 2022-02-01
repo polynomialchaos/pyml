@@ -7,12 +7,8 @@ class FullyConnectedLayer(Layer):
 
     def __init__(self, input_size, output_size):
         super().__init__()
-        self.weights = np.random.randn(output_size, input_size)
-        self.bias = np.random.randn(output_size, 1)
-
-    def forward_propagation(self, input_data):
-        self.input = input_data
-        return np.dot(self.weights, self.input) + self.bias
+        self.weights = np.random.rand(output_size, input_size) - 0.5
+        self.bias = np.random.rand(output_size, 1) - 0.5
 
     def backward_propagation(self, output_error, learning_rate):
         weights_error = np.dot(output_error, self.input.T)
@@ -22,3 +18,6 @@ class FullyConnectedLayer(Layer):
         self.weights -= learning_rate * weights_error
         self.bias -= learning_rate * output_error
         return input_error
+
+    def forward_propagation(self):
+        return np.dot(self.weights, self.input) + self.bias

@@ -1,3 +1,4 @@
+import numpy as np
 from .layer import Layer
 
 
@@ -10,8 +11,8 @@ class ActivationLayer(Layer):
 
     def forward_propagation(self, input_data):
         self.input = input_data
-        self.output = self.activation.function(self.input)
-        return self.output
+        return self.activation.function(self.input)
 
     def backward_propagation(self, output_error, learning_rate):
-        return self.activation.function_derive(self.input) * output_error
+        return np.multiply(output_error,
+                           self.activation.function_derive(self.input))

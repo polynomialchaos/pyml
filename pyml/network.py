@@ -12,16 +12,11 @@ class Network:
 
     def evaluate(self, input_data):
         """Evaluate the trained neural network."""
-        result = []
-        for i in input_data:
+        output = input_data
+        for layer in self.layers:
+            output = layer.forward_propagation(output)
 
-            output = input_data[i]
-            for layer in self.layers:
-                output = layer.forward_propagation(output)
-
-            result.append(output)
-
-        return result
+        return output
 
     def train(self, x_train, y_train, epochs, learning_rate, print=False):
         """Train the neural network."""
@@ -31,17 +26,15 @@ class Network:
         # training loop
         for i in range(epochs):
             err = 0
-            for j in range(samples):
+            for x, y in zip(x_train, y_train):
                 # forward propagation
-                output = x_train[j]
-                for layer in self.layers:
-                    output = layer.forward_propagation(output)
+                output = self.evaluate(x)
 
                 # compute loss (for display purpose only)
-                err += self.loss.function(y_train[j], output)
+                err += self.loss.function(y, output)
 
                 # backward propagation
-                error = self.loss.function_derive(y_train[j], output)
+                error = self.loss.function_derive(y, output)
                 for layer in reversed(self.layers):
                     error = layer.backward_propagation(error, learning_rate)
 

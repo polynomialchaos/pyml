@@ -9,7 +9,7 @@ setup(
     packages=['pyml'],
     entry_points={
         "console_scripts": [
-            'pyML=pyml.bin.pyML:main',
+            # 'pyML=pyml.bin.pyML:main',
         ]
     }
 )

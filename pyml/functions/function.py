@@ -1,10 +1,10 @@
 class Function:
     """Function (base) class."""
 
-    def function(self, *args):
+    def function(self):
         """Function callable."""
         raise NotImplementedError
 
-    def function_derive(self, *args):
+    def function_derive(self):
         """Function derivative callable."""
         raise NotImplementedError

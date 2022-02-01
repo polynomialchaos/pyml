@@ -1,2 +1,2 @@
-from .activation import HyperbolicTangent
-from .loss import MeanSquaredErrorLoss
+from .activation import HyperbolicTangentActivation, SigmoidActivation
+from .loss import BinaryCrossEntropyLoss, MeanSquaredErrorLoss

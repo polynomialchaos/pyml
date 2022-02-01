@@ -28,17 +28,17 @@ class ConvolutionalLayer(Layer):
 
         return self.output
 
-    def backward_propagation(self, output_gradient, learning_rate):
+    def backward_propagation(self, output_error, learning_rate):
         kernel_gradient = np.zeros(self.kernels_shape)
         input_gradient = np.zeros(self.input_shape)
 
         for i in range(self.depth):
             for j in range(self.input_depth):
                 kernel_gradient[i, j] += correlate2d(self.input[j],
-                                                     output_gradient[i], 'valid')
-                input_gradient[j] += convolve2d(output_gradient[i],
+                                                     output_error[i], 'valid')
+                input_gradient[j] += convolve2d(output_error[i],
                                                 self.kernels[i, j], 'full')
 
         self.kernels -= learning_rate * kernel_gradient
-        self.biases -= learning_rate * output_gradient
+        self.biases -= learning_rate * output_error
         return input_gradient

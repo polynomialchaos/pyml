@@ -1,4 +1,3 @@
-import imp
 import numpy as np
 from .function import Function
 

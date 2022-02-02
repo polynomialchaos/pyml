@@ -7,7 +7,7 @@ setup(
     author='Florian',
     author_email='polynomialchaos@gmail.com',
     packages=['pyml'],
-    install_requires=['numpy', 'scipy', 'matplotlib'],
+    install_requires=['numpy', 'scipy'],
     entry_points={
         "console_scripts": [
             # 'pyML=pyml.bin.pyML:main',

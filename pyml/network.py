@@ -26,7 +26,7 @@ class Network:
 
         return output
 
-    def train(self, x_train, y_train, epochs, learning_rate, print=False):
+    def train(self, x_train, y_train, epochs, learning_rate, do_print=False):
         """Train the neural network."""
         # sample dimension first
         samples = len(x_train)
@@ -47,5 +47,5 @@ class Network:
 
             # calculate average error on all samples
             err /= samples
-            if print:
+            if do_print:
                 print('epoch %d/%d   error=%f' % (i+1, epochs, err))

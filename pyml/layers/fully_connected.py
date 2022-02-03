@@ -21,15 +21,15 @@
 # SOFTWARE.
 import numpy as np
 from .layer import Layer
-
+# np.random.seed(0)
 
 class FullyConnectedLayer(Layer):
     """Fully connected layer class."""
 
     def __init__(self, input_size, output_size):
         super().__init__()
-        self.weights = np.random.rand(output_size, input_size)
-        self.bias = np.random.rand(output_size, 1)
+        self.weights = np.random.randn(output_size, input_size)
+        self.bias = np.random.randn(output_size, 1)
 
     def backward_propagation(self, output_error, learning_rate):
         weights_error = np.dot(output_error, self.input.T)

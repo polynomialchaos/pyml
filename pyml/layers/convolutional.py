@@ -22,7 +22,8 @@
 import numpy as np
 from scipy.signal import correlate2d, convolve2d
 from .layer import Layer
-
+from .convolve import cross_correlate_2d, convolve_2d
+# np.random.seed(0)
 
 class ConvolutionalLayer(Layer):
     """Convolutional layer class."""
@@ -49,6 +50,11 @@ class ConvolutionalLayer(Layer):
                                                      output_error[i], 'valid')
                 input_gradient[j] += convolve2d(output_error[i],
                                                 self.kernels[i, j], 'full')
+                # kernel_gradient[i, j] += cross_correlate_2d(self.input[j],
+                #                                             output_error[i])
+                # input_gradient[j] += convolve_2d(output_error[i],
+                #                                  self.kernels[i, j],
+                #                                  padding=(self.kernels_shape[2] - 1, self.kernels_shape[3] - 1))
 
         # update parameters
         self.kernels -= learning_rate * kernel_gradient
@@ -61,5 +67,7 @@ class ConvolutionalLayer(Layer):
             for j in range(self.input_depth):
                 output[i] += correlate2d(self.input[j],
                                          self.kernels[i, j], 'valid')
+                # output[i] += cross_correlate_2d(self.input[j],
+                #                                 self.kernels[i, j])
 
         return output

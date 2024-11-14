@@ -1,5 +1,4 @@
 # https://github.com/detkov/Convolution-From-Scratch/blob/main/convolution.py
-
 import numpy as np
 from typing import List, Tuple, Union
 
